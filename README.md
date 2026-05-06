@@ -15,7 +15,7 @@ estimates daily.
 - Terrain channeling index: 0.855 (strong valley signature)
 - Surface expression of January–February 2026 SSW event detected
 
-Published on RTL-SDR.com: [link when live]
+Published on RTL-SDR.com: https://www.rtl-sdr.com/guest-post-listening-to-the-jet-stream-100-days-of-wind-sensing-with-stock-rtl-sdr-hardware/
 
 ---
 
