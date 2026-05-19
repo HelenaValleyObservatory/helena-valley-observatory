@@ -72,9 +72,6 @@ class Sagan:
                 out += "Several planets visible today.\n\n"
         else:
             out += "Several planets visible today.\n\n"
-        out += "A machinist turned citizen scientist in a 130-year-old house\n"
-        out += "is doing atmospheric science with a $30 antenna.\n\n"
-        out += "The code is the only thing that doesn't lie.\n"
         out += "─" * 60 + "\n"
         return out
 

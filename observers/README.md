@@ -138,10 +138,7 @@ Example output from session council_20260518_2039.txt:
       A river of air, 35,000 feet above the valley,
       measured by the ground speeds of passing airliners.
 
-      A machinist turned citizen scientist in a 130-year-old house
-      is doing atmospheric science with a $30 antenna.
 
-      The code is the only thing that doesn't lie.
 
 ---
 
