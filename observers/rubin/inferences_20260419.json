@@ -1,0 +1,9 @@
+[
+  {
+    "observer": "Rubin",
+    "time": "2026-04-19T09:28:20.229433",
+    "type": "missing_predicted",
+    "note": "ISS pass predicted at 19:45 but not observed (cloud cover?)",
+    "inference": "Object blocked, failed, or prediction error"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "observer": "Brahe",
+    "time": "2026-04-18T21:22:57.527366",
+    "system": "RTL-SDR",
+    "status": "WARNING",
+    "note": "RTL-SDR test returned errors"
+  },
+  {
+    "observer": "Brahe",
+    "time": "2026-04-18T21:22:57.527366",
+    "system": "System Clock",
+    "status": "GOOD",
+    "note": "System clock synchronized via NTP"
+  },
+  {
+    "observer": "Brahe",
+    "time": "2026-04-18T21:22:57.527366",
+    "system": "Data Pipeline",
+    "status": "GOOD",
+    "note": "4 data files created in last hour"
+  }
+]

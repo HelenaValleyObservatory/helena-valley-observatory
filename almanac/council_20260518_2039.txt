@@ -1,0 +1,128 @@
+THE GREAT OBSERVATORY COLLECTIVE
+Council Session: 2026-05-18 20:39:53.568816
+============================================================
+
+--- GALILEO ---
+
+[Galileo] All atmospheric patterns within expected bounds.
+
+
+--- HEVELIUS ---
+
+[Hevelius] Sky Map for Helena, Montana:
+  Visible objects: Sun, Moon, Venus, Jupiter
+    Sun: Alt 2.37°, Az 296.95°
+    Moon: Alt 29.60°, Az 279.78°
+    Venus: Alt 28.21°, Az 277.60°
+    Jupiter: Alt 42.26°, Az 257.22°
+
+
+--- BARNARD ---
+
+[Barnard] Deep patterns across 90 days:
+  • BL wind seasonal arc (70 days): Feb=94° → Mar=116° → Apr=105° → May=137°
+  • Strong reversals (>120°): 12 days detected — most recent: 20260506
+  • Jet weekly rhythm: strongest on Sun (62kt), weakest on Fri (54kt)
+
+
+--- MOORE ---
+
+[Moore] Today's Atmospheric Narrative:
+────────────────────────────────────────────────────────────
+The observatory has now filed 14 formal findings.
+The sky continues to be witnessed.
+────────────────────────────────────────────────────────────
+
+
+--- BRAHE ---
+
+[Brahe] Quality Control Report:
+  ⚠  1 warning(s)
+  ✅ ADS-B Observatory: Process running, RTL-SDR locked (expected)
+  ✅ System Clock: NTP synchronized
+  ⚠  Flow Lab: No gold: regime_unknown (era5_missing_synoptic_unparseable)
+  ✅ Signal Quality: Report current (SIGNAL_QUALITY_20260517.txt)
+  ✅ Jet Spine: Last entry: 2026-05-19 tier=D
+
+
+--- KEPLER ---
+
+[Kepler] Mathematical Laws:
+  📐 Jet speed law: μ=57.6kt σ=31.6kt over 113 published days
+  📐 7-day trend: 48.7kt vs season mean 57.6kt → jet is weakening (Δ-8.9kt)
+  📐 Archive extremes: max=139.8kt on 2026-02-24, min=11.2kt on 2026-04-30
+  📐 Seasonal law: winter μ=57.9kt vs spring μ=62.0kt (Δ+4.1kt — spring transition confirmed)
+
+
+--- HERSCHEL ---
+
+[Herschel] Discovery Log:
+  ✨ No new discoveries today — the archive grows deeper.
+
+
+--- RUBIN ---
+
+[Rubin] Inference from Absence:
+  🔍 17/90 days have no Flow Lab output — what atmospheric conditions prevented processing?
+  🔍 1 days failed gold — most common: 'regime_unknown (era5_missing_synoptic_un' (1x). What does the atmosphere look like on these invisible days?
+  🔍 46 days with BL/JET coupling (<30° difference). Finding 005: the valley did not break — the jet returned to easterly. Valley locks, jet wanders.
+
+
+--- CANNON ---
+
+[Cannon] Classification Catalog:
+
+  ATMOSPHERIC REGIMES (73 days):
+    ZONAL       :  47 days (67.1%)
+    NOT_ZONAL   :  16 days (22.9%)
+    PARTIAL     :   7 days (10.0%)
+
+  MONTHLY BREAKDOWN:
+    Feb: ZON=5 | PAR=2 | NOT=4
+    Mar: ZON=8 | PAR=1 | NOT=4
+    Apr: ZON=22 | PAR=3 | NOT=5
+    05: ZON=12 | PAR=1 | NOT=3
+
+  AIRCRAFT (90-day archive):
+    PASSENGER: 24017 aircraft-days
+    GA: 4833 aircraft-days
+    UNKNOWN_COMMERCIAL: 4100 aircraft-days
+    CARGO: 2669 aircraft-days
+    MILITARY: 1337 aircraft-days
+    UNKNOWN: 516 aircraft-days
+    HELICOPTER: 133 aircraft-days
+
+  MILITARY TYPES:
+    B190: 423
+    H60: 214
+    K35R: 122
+    C17: 108
+    H47: 93
+    DV20: 78
+
+  SHEAR EVENTS: 51 validated, 51 exploratory
+
+
+--- SAGAN ---
+
+[Sagan] Cosmic Perspective:
+────────────────────────────────────────────────────────────
+We are a way for the cosmos to know itself.
+
+This observatory has operated for 132 days.
+It has witnessed 6,985 unique aircraft.
+It has filed 14 formal findings.
+
+The jet stream over Helena right now: 17.1kt.
+A river of air, 35,000 feet above the valley,
+measured by the ground speeds of passing airliners.
+
+4 worlds visible in today's sky: Sun, Moon, Venus, Jupiter.
+
+A machinist turned citizen scientist in a 130-year-old house
+is doing atmospheric science with a $30 antenna.
+
+The code is the only thing that doesn't lie.
+────────────────────────────────────────────────────────────
+
+

@@ -1,0 +1,23 @@
+{
+  "observer": "Cannon",
+  "time": "2026-04-18T21:22:57.811312",
+  "classifications": {
+    "aircraft": {
+      "commercial": 15,
+      "private": 3,
+      "unknown": 2
+    },
+    "satellites": {
+      "communication": 45,
+      "navigation": 12,
+      "earth_observation": 8,
+      "space_station": 1
+    },
+    "events": {
+      "transits": 67,
+      "anomalies": 3,
+      "first_seen": 1,
+      "rare_events": 0
+    }
+  }
+}

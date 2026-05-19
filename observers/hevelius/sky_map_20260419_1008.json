@@ -1,0 +1,37 @@
+{
+  "observer": "Hevelius",
+  "time": "2026-04-19T10:08:29.133953",
+  "location": "Helena, Montana",
+  "celestial_positions": {
+    "Sun": {
+      "altitude": "35.39\u00b0",
+      "azimuth": "113.56\u00b0",
+      "visible": true
+    },
+    "Moon": {
+      "altitude": "24.59\u00b0",
+      "azimuth": "79.67\u00b0",
+      "visible": true
+    },
+    "Venus": {
+      "altitude": "24.65\u00b0",
+      "azimuth": "87.48\u00b0",
+      "visible": true
+    },
+    "Mars": {
+      "altitude": "38.69\u00b0",
+      "azimuth": "140.88\u00b0",
+      "visible": true
+    },
+    "Jupiter": {
+      "altitude": "-7.86\u00b0",
+      "azimuth": "44.57\u00b0",
+      "visible": false
+    },
+    "Saturn": {
+      "altitude": "37.49\u00b0",
+      "azimuth": "140.72\u00b0",
+      "visible": true
+    }
+  }
+}

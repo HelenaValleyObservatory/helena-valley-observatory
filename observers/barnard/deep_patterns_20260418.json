@@ -1,0 +1,16 @@
+[
+  {
+    "observer": "Barnard",
+    "time": "2026-04-18T21:22:57.479513",
+    "type": "long_term_pattern",
+    "note": "Weekend sky traffic peaks between 18:00-22:00 local time",
+    "timespan": "30 days"
+  },
+  {
+    "observer": "Barnard",
+    "time": "2026-04-18T21:22:57.479513",
+    "type": "seasonal_shift",
+    "note": "ISS visibility window shifting earlier by 3 minutes per week",
+    "significance": "Subtle but persistent"
+  }
+]
