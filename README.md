@@ -17,6 +17,10 @@ estimates daily.
 
 Published on RTL-SDR.com: https://www.rtl-sdr.com/guest-post-listening-to-the-jet-stream-100-days-of-wind-sensing-with-stock-rtl-sdr-hardware/
 
+Larson, M. (2026). Jet Stream Intensity Proxy, ADS-B Passive Wind Sensing, Helena MT (Jan–May 2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20975559
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20975559.svg)](https://doi.org/10.5281/zenodo.20975559)
+
 ---
 
 ## Hardware Requirements
@@ -216,6 +220,10 @@ If you use this code in research, please cite:
 Larson, M. (2026). Listening to the Jet Stream: 100 Days of Wind
 Sensing with Stock RTL-SDR Hardware. RTL-SDR.com.
 https://www.rtl-sdr.com/guest-post-listening-to-the-jet-stream-100-days-of-wind-sensing-with-stock-rtl-sdr-hardware/
+
+Larson, M. (2026). Jet Stream Intensity Proxy, ADS-B Passive Wind Sensing, Helena MT (Jan–May 2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20975559
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20975559.svg)](https://doi.org/10.5281/zenodo.20975559)
 
 ---
 
