@@ -36,24 +36,22 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import configparser, os
+import sys, os
+sys.path.insert(0, str(Path(__file__).parent.parent / "config"))
+from observatory_config import get_config
+_cfg      = get_config()
+DATA_ROOT = Path(_cfg["data_root"])
+OUT_BASE  = DATA_ROOT / "flowlab"
 
-def _load_config():
-    cfg = configparser.ConfigParser()
-    cfg_path = os.environ.get(
-        "OBSERVATORY_CONFIG",
-        os.path.join(os.path.dirname(__file__), "..", "config", "observatory.cfg")
-    )
-    cfg.read(cfg_path)
-    return cfg
+# Spatial grid: ~10nm cells around KHLN (46.5890, -112.0391)
+# We use a simple lat/lon grid bucketing
+GRID_DEG = 0.15   # ~10nm per cell at this latitude
 
-_cfg = _load_config()
-DATA_ROOT       = Path(_cfg.get("observatory", "data_root", fallback="/tmp/observatory/data"))
-OUT_BASE        = DATA_ROOT / "flowlab"
-GRID_DEG        = 0.15
-KHLN_LAT        = float(_cfg.get("observatory", "receiver_lat", fallback="46.5890"))
-KHLN_LON        = float(_cfg.get("observatory", "receiver_lon", fallback="-112.0391"))
-VALLEY_AXIS_DEG = float(_cfg.get("observatory", "valley_axis_deg", fallback="75.0"))
+KHLN_LAT = 46.5890
+KHLN_LON = -112.0391
+
+# Valley axis for Helena Basin (approx WSW-ENE corridor)
+VALLEY_AXIS_DEG = 75.0   # degrees (ENE direction of valley)
 
 
 def angle_diff(a, b):

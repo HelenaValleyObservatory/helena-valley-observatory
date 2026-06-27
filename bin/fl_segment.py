@@ -42,6 +42,7 @@ ALT_BINS = [
     ("UPPER", 18000, 30000),  # upper
     ("JET",   30000, 99999),  # jet stream
 ]
+FIELD_ELEV_FT = 3877
 
 # Aircraft type → nominal TAS (kt) prior [mean, std]
 # Based on category field: A1=light, A2=small, A3=large, A4=heavy, B1=rotorcraft
@@ -57,23 +58,13 @@ TAS_PRIOR = {
     "??": (250, 120),   # unknown — wide prior
 }
 
-import configparser, os
-
-def _load_config():
-    cfg = configparser.ConfigParser()
-    # Look for config in: --config arg, env var, or default locations
-    cfg_path = os.environ.get(
-        "OBSERVATORY_CONFIG",
-        os.path.join(os.path.dirname(__file__), "..", "config", "observatory.cfg")
-    )
-    cfg.read(cfg_path)
-    return cfg
-
-_cfg = _load_config()
-DATA_ROOT  = Path(_cfg.get("observatory", "data_root", fallback="/tmp/observatory/data"))
-JSONL_DIR  = DATA_ROOT / "aircraft"
-OUT_DIR    = DATA_ROOT / "flowlab"
-FIELD_ELEV_FT = int(_cfg.get("observatory", "field_elev_ft", fallback="3877"))
+import sys, os
+sys.path.insert(0, str(Path(__file__).parent.parent / "config"))
+from observatory_config import get_config
+_cfg      = get_config()
+DATA_ROOT = Path(_cfg["data_root"])
+JSONL_DIR = DATA_ROOT / "aircraft"
+OUT_DIR   = DATA_ROOT / "flowlab"
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────

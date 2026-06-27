@@ -15,24 +15,18 @@
 #   4. fl_report.py   — OFM-style text report
 #
 # Outputs land in:
-#   $DATA_ROOT/flowlab/YYYYMMDD/
-#   $DATA_ROOT/briefs/flowlab_YYYYMMDD.txt
+#   /mnt/SYSTEM_ARCHIVE/OBSERVATORY/data/flowlab/YYYYMMDD/
+#   /mnt/SYSTEM_ARCHIVE/OBSERVATORY/data/briefs/flowlab_YYYYMMDD.txt
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# ── configuration ────────────────────────────────────────────────────────────
-# Set OBSERVATORY_ROOT to your installation directory
-# Or pass --root /your/path as first argument
-if [[ "${1:-}" == "--root" ]]; then
-  OBSERVATORY_ROOT="$2"; shift 2
-else
-  OBSERVATORY_ROOT="${OBSERVATORY_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
-fi
-BIN_DIR="${OBSERVATORY_ROOT}/bin"
-DATA_ROOT="${OBSERVATORY_ROOT}/data"
-export OBSERVATORY_CONFIG="${OBSERVATORY_ROOT}/config/observatory.cfg"
+# Set BIN_DIR to the repo bin/ — resolve relative to this script
+BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# DATA_ROOT: use environment variable or config file
+# Set HELENA_DATA=/your/data/path before running, or edit config/observatory.cfg
+DATA_ROOT="${HELENA_DATA:-}"
 
 # ── argument parsing ──────────────────────────────────────────────────────────
 if [[ $# -eq 0 ]]; then

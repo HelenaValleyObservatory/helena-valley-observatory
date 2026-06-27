@@ -28,25 +28,21 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import configparser, os
-
-def _load_config():
-    cfg = configparser.ConfigParser()
-    cfg_path = os.environ.get(
-        "OBSERVATORY_CONFIG",
-        os.path.join(os.path.dirname(__file__), "..", "config", "observatory.cfg")
-    )
-    cfg.read(cfg_path)
-    return cfg
-
-_cfg      = _load_config()
-DATA_ROOT = Path(_cfg.get("observatory", "data_root", fallback="/tmp/observatory/data"))
+import sys, os
+sys.path.insert(0, str(Path(__file__).parent.parent / "config"))
+from observatory_config import get_config
+_cfg      = get_config()
+DATA_ROOT = Path(_cfg["data_root"])
 OUT_BASE  = DATA_ROOT / "flowlab"
-KHLN_LAT  = float(_cfg.get("observatory", "receiver_lat",   fallback="46.5890"))
-KHLN_LON  = float(_cfg.get("observatory", "receiver_lon",   fallback="-112.0391"))
+
+KHLN_LAT = 46.5890
+KHLN_LON = -112.0391
 GRID_DEG  = 0.15
-_axis     = float(_cfg.get("observatory", "valley_axis_deg", fallback="75.0"))
-VALLEY_AXES = [_axis, (_axis - 60) % 180]
+
+# Helena Basin valley axis (ENE direction, degrees)
+# The valley runs roughly WSW-ENE through Helena
+# Primary axis ~75°, secondary axis (N-S valley slots) ~15°
+VALLEY_AXES = [75.0, 15.0]
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────

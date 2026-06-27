@@ -21,25 +21,18 @@ from datetime import datetime, timezone
 import pandas as pd
 import numpy as np
 
-import configparser, os
+import sys, os
+sys.path.insert(0, str(Path(__file__).parent.parent / "config"))
+from observatory_config import get_config
+_cfg      = get_config()
+DATA_ROOT  = Path(_cfg["data_root"])
+OUT_BASE   = DATA_ROOT / "flowlab"
+BRIEFS_DIR = DATA_ROOT / "briefs"
 
-def _load_config():
-    cfg = configparser.ConfigParser()
-    cfg_path = os.environ.get(
-        "OBSERVATORY_CONFIG",
-        os.path.join(os.path.dirname(__file__), "..", "config", "observatory.cfg")
-    )
-    cfg.read(cfg_path)
-    return cfg
-
-_cfg            = _load_config()
-DATA_ROOT       = Path(_cfg.get("observatory", "data_root",      fallback="/tmp/observatory/data"))
-OUT_BASE        = DATA_ROOT / "flowlab"
-BRIEFS_DIR      = DATA_ROOT / "briefs"
-VALLEY_AXIS_DEG = float(_cfg.get("observatory", "valley_axis_deg", fallback="75.0"))
-FIELD_ELEV_FT   = int(_cfg.get("observatory",   "field_elev_ft",   fallback="3877"))
-KHLN_LAT        = float(_cfg.get("observatory", "receiver_lat",    fallback="46.5890"))
-KHLN_LON        = float(_cfg.get("observatory", "receiver_lon",    fallback="-112.0391"))
+VALLEY_AXIS_DEG = 75.0
+FIELD_ELEV_FT   = 3877
+KHLN_LAT = 46.5890
+KHLN_LON = -112.0391
 
 ALT_BIN_LABELS = {
     "BL":    "Boundary Layer   (0–3k AGL)",
@@ -180,7 +173,7 @@ def build_report(date: str, out_path: Path | None = None) -> str:
     div("═")
     lines.append(f"  OBSERVATORY FLOW LABORATORY — DAILY REPORT")
     lines.append(f"  Date     : {date_fmt}")
-    lines.append(f"  Location : {_cfg.get('observatory', 'airport_name', fallback='RECV')}  {KHLN_LAT:.4f}°N  {abs(KHLN_LON):.4f}°W")
+    lines.append(f"  Location : Helena, Montana (KHLN)  46.5890°N  112.0391°W")
     lines.append(f"  Elev     : {FIELD_ELEV_FT} ft MSL")
     lines.append(f"  Generated: {generated_at}")
     if syn_regime == "TROUGH_SUSPECT" and syn_dir is not None:

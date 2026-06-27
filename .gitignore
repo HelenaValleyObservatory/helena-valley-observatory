@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Observatory data (never commit actual data)
+data/
+*.jsonl
+*.parquet
+*.nc
+
+# ERA5 cache
+era5/
+
+# Personal config (keep the example, not the live one)
+config/observatory.cfg
+
+# Editor
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
