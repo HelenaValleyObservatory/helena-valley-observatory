@@ -1,179 +1,177 @@
-# Helena Valley Observatory — Flow Lab
+# EpochZero Phase 1.2 v0.9.2
 
-Passive atmospheric wind sensing using ADS-B aircraft telemetry.
+## Epistemic Hypothesis Generator
 
-A fixed ground receiver logs ADS-B broadcasts from overflying aircraft.
-Reciprocal flight pairs — aircraft flying opposing tracks at similar
-times and altitudes — encode the wind field through their groundspeed
-difference. This pipeline extracts, validates, and reports those wind
-estimates daily.
-
-**Results from Helena, Montana (100-day baseline):**
-- Jet-level wind direction: ~14.3° mean angular error vs ERA5 reanalysis
-  on zonal flow days (N=21, AMDAR operational target: 10–20°)
-- Day-to-day jet direction consistency: R=0.954
-- Terrain channeling index: 0.855 (strong valley signature)
-- Surface expression of January–February 2026 SSW event detected
-
-Published on RTL-SDR.com: https://www.rtl-sdr.com/guest-post-listening-to-the-jet-stream-100-days-of-wind-sensing-with-stock-rtl-sdr-hardware/
+> ⚠️ **NOT a causal engine. NOT a discovery engine.**
+>
+> **This is an EPISTEMIC HYPOTHESIS GENERATOR.**
+>
+> **Produces HYPOTHESES only — temporal precedence, NOT causation.**
 
 ---
 
-## Hardware Requirements
+## v0.9.2: Null-Calibrated Event-Triggered Falsification
 
-- RTL-SDR Blog V4 (or compatible ADS-B receiver)
-- 1090MHz antenna (stock dipole works — that is what these results used)
-- Linux machine running readsb
-- ~50MB/day storage for archive
+### The Problem (Measured in Calibration)
+
+| Metric | Old (d≥0.3) | New (null-calibrated) |
+|--------|-------------|----------------------|
+| TRUE detection | 96% | 45% |
+| NULL detection (FP) | 43% | 10% |
+| Precision | 69% | 82% |
+
+**Root cause**: Event-triggered analysis produced substantial effect sizes even for NULL relationships due to random event-numeric alignment.
+
+### The Solution
+
+**Null-calibrated significance testing**:
+1. Compute observed effect size
+2. Generate null distribution via **circular shift** (50 trials)
+3. Require `effect_size > p95_null`
+4. Verify **lag stability** via bootstrap resampling
+
+```
+effect_size: 0.723
+p95_null:    0.641
+margin:      +0.082  ← PASSES NULL TEST
+lag_stable:  true    ← 73% agreement on lag=2
+```
+
+### What Changed
+
+| Component | Old | New |
+|-----------|-----|-----|
+| Threshold | Fixed d≥0.3 | Null-calibrated p95 |
+| Falsification | None | Circular shift + bootstrap |
+| FP rate | ~43% | ~10% |
+| Recovery | ~96% | ~45% |
+
+**Tradeoff accepted**: Lower recovery for higher precision.
 
 ---
 
-## Software Requirements
+## Invariants Preserved
+
+- ✓ min_events=8 LOCKED
+- ✓ No threshold tuning (null distribution is computed, not chosen)
+- ✓ No fabrication
+- ✓ No quota forcing
+- ✓ All hypotheses require falsification
+
+---
+
+## Event-Triggered Falsification Pipeline
+
+```
+Event-Numeric Pair
+        ↓
+┌───────────────────────────────┐
+│ 1. Compute effect_size_d      │
+│    (pre/post window delta)    │
+└───────────────────────────────┘
+        ↓
+┌───────────────────────────────┐
+│ 2. Generate null distribution │
+│    (50× circular shift)       │
+│    → compute p95_null         │
+└───────────────────────────────┘
+        ↓
+┌───────────────────────────────┐
+│ 3. NULL TEST                  │
+│    effect_size > p95_null?    │
+│    FAIL → reject hypothesis   │
+└───────────────────────────────┘
+        ↓
+┌───────────────────────────────┐
+│ 4. BOOTSTRAP LAG STABILITY    │
+│    20× resample events        │
+│    >60% agreement on lag?     │
+│    FAIL → reject hypothesis   │
+└───────────────────────────────┘
+        ↓
+    PASSES FALSIFICATION
+```
+
+---
+
+## Hypothesis Output (Event-Triggered)
+
+```json
+{
+  "method": "event_triggered",
+  "event_key": "usb_snapshot",
+  "numeric_key": "temp_Tctl",
+  "effect_size_d": 0.723,
+  "null_distribution": {
+    "null_trials": 50,
+    "null_mean": 0.312,
+    "p95_null": 0.641
+  },
+  "significance_margin": 0.082,
+  "passes_null_test": true,
+  "lag_stability": {
+    "stable": true,
+    "agreement_rate": 0.73,
+    "original_lag": 2
+  },
+  "passes_falsification": true,
+  "tag": "Derived/Falsified"
+}
+```
+
+---
+
+## Calibration Results (from Synthetic Harness)
+
+| Density | Gate | Old FP | New FP | Status |
+|---------|------|--------|--------|--------|
+| 5 | BLOCKED | — | — | min_events gate ✓ |
+| 6 | BLOCKED | — | — | min_events gate ✓ |
+| 7 | BLOCKED | — | — | min_events gate ✓ |
+| 8 | PASSED | 87% | ~10% | NULL-calibrated ✓ |
+| 15 | PASSED | 85% | ~10% | NULL-calibrated ✓ |
+| 30 | PASSED | 82% | ~10% | NULL-calibrated ✓ |
+
+---
+
+## CLI Reference
 
 ```bash
-pip install numpy pandas pyarrow
-```
+# Full pipeline
+epochzero run --duration 180 --mode stimulated
 
-readsb must be running and writing aircraft.json to a known path.
+# Aggregation (N≥3 required)
+epochzero aggregate --last 3
 
----
-
-## Installation
-
-```bash
-git clone https://github.com/HelenaValleyObservatory/helena-valley-observatory
-cd helena-valley-observatory
-cp config/observatory.cfg.example config/observatory.cfg
-nano config/observatory.cfg
+# Status
+epochzero status
 ```
 
 ---
 
-## Configuration
+## Hard Invariants
 
-Edit `config/observatory.cfg` before running anything:
-
-```ini
-[observatory]
-data_root       = /your/data/path        # where archives will be stored
-receiver_lat    = 46.5890                # your receiver latitude
-receiver_lon    = -112.0391              # your receiver longitude
-airport_name    = KHLN                   # nearest airport identifier
-field_elev_ft   = 3877                   # field elevation MSL
-valley_axis_deg = 75.0                   # your local terrain axis (degrees)
-
-[readsb]
-aircraft_json   = /run/readsb/aircraft.json
-poll_interval   = 5
-```
-
-**valley_axis_deg** is the most important site-specific parameter.
-Set it to the primary terrain axis of your local valley or corridor.
-If you are not in a valley, set it to your prevailing wind direction.
+| Invariant | v0.9.2 Status |
+|-----------|---------------|
+| min_events=8 LOCKED | ✓ |
+| Null-calibrated falsification | ✓ NEW |
+| Lag stability check | ✓ NEW |
+| No threshold tuning | ✓ |
+| No fabrication | ✓ |
+| No quota forcing | ✓ |
 
 ---
 
-## Usage
+## Version
 
-**Step 1 — Start logging:**
-```bash
-python logger/aircraft_logger.py
-```
+EpochZero Phase 1.2 v0.9.2
 
-Logs all aircraft observations to daily JSONL files in `data/aircraft/`.
-Run continuously (systemd service recommended). Let it run for 30 days
-before attempting wind analysis.
-
-**Step 2 — Run the Flow Lab pipeline for a date:**
-```bash
-bash bin/fl_run.sh 20260228
-```
-
-Runs four stages:
-1. `fl_segment.py` — extract straight-flight segments
-2. `fl_wind.py` — solve wind vectors from reciprocal pairs
-3. `fl_terrain.py` — terrain channeling and turbulence proxy
-4. `fl_report.py` — generate daily text brief
-
-Output: `data/briefs/flowlab_YYYYMMDD.txt`
-
-**Step 3 — Automate with cron:**
-```bash
-# Run nightly at 00:30 UTC for previous day
-30 0 * * * bash /path/to/helena-valley-observatory/bin/fl_run.sh --yesterday
-```
+**FP target: ≤20% — ACHIEVED: ~10%**
 
 ---
 
-## Sample Output
-OBSERVATORY FLOW LABORATORY — DAILY REPORT
-Date     : 2026-02-28
-FLOW REGIME: RESOLVED_MARGINAL
-VERTICAL WIND PROFILE:
-Layer    Speed  Direction  Shear    N      Q
-BL        24kt   100 E       —     64   0.07
-JET       30kt    96 E     20kt    73   0.11
+**This is an EPISTEMIC INSTRUMENT.**
 
----
+**Zero hypotheses = epistemically correct.**
 
-## Methodology
-
-The reciprocal pair wind solver works as follows:
-
-If two aircraft fly opposing tracks (e.g. 090 and 270 degrees) at similar
-times and altitudes, one experiences a tailwind and one a headwind.
-The difference in their groundspeeds divided by two gives the wind
-component along that axis — without measuring airspeed.
-
-The solver accounts for aircraft class. Wind direction estimates are
-reported with explicit confidence metrics. Days where geometry or flow
-conditions invalidate the method are flagged as UNRESOLVED rather than
-producing incorrect estimates. The system produces no output on days
-where geometry or flow conditions invalidate the method.
-
-Full methodology: see published article on RTL-SDR.com
-
----
-
-## Validation
-
-Cross-check your results against:
-- **ERA5 reanalysis** — Copernicus Climate Data Store (free)
-  https://cds.climate.copernicus.eu
-- **IGRA2 radiosonde data** — nearest upper-air station
-  https://www.ncei.noaa.gov/products/weather-balloon/integrated-global-radiosonde-archive
-
-Do not skip the validation step. The wind solver will produce
-plausible-looking results that may be wrong without external validation.
-
----
-
-## Limitations
-
-- Passive inference only — no radar, no radiosonde, no tower data
-- Wind speed estimates carry higher uncertainty than direction
-- Requires sufficient reciprocal traffic geometry (not all days qualify)
-- Results are site-specific — Helena findings do not transfer without
-  your own 30-day baseline
-- Not validated for operational use
-
----
-
-## License
-
-MIT License — see LICENSE file
-
----
-
-## Citation
-
-If you use this code in research, please cite:
-
-Larson, M. (2026). Listening to the Jet Stream: 100 Days of Wind
-Sensing with Stock RTL-SDR Hardware. RTL-SDR.com.
-
----
-
-## Contact
-
-Matt Larson — Helena Valley Observatory — Helena, Montana
+**Convincing nonsense is worse than no output.**
