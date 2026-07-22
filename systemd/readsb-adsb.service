@@ -1,0 +1,31 @@
+[Unit]
+Description=readsb ADS-B decoder (airplanes only)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/mnt/SYSTEM_ARCHIVE
+
+[Service]
+Type=simple
+User=hood
+Group=hood
+Restart=always
+RestartSec=2
+Nice=-5
+
+WorkingDirectory=/mnt/SYSTEM_ARCHIVE/OBSERVATORY/runtime/readsb
+ReadWritePaths=/mnt/SYSTEM_ARCHIVE/OBSERVATORY/runtime
+
+ExecStart=/usr/sbin/readsb \
+  --device-type=rtlsdr \
+  --device=0 \
+  --freq=1090000000 \
+  --gain=auto \
+  --write-json=/mnt/SYSTEM_ARCHIVE/OBSERVATORY/runtime/readsb \
+  --write-json-every=1 \
+  --json-location-accuracy=2 \
+  --net \
+ 
+
+
+[Install]
+WantedBy=multi-user.target
