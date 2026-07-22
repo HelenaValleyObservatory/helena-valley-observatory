@@ -64,7 +64,10 @@ def bearing_mean_weighted(angles, weights=None):
         weights = np.ones(len(rad))
     wx = np.sum(weights * np.cos(rad))
     wy = np.sum(weights * np.sin(rad))
-    return float(np.rad2deg(math.atan2(wy, wx)) % 360)
+    # Double mod: floating-point cancellation in wx/wy can leave atan2 a hair
+    # below zero, which % 360 rounds up to exactly 360.0 instead of ~0.0.
+    # 360.0 % 360 == 0.0 exactly (no cancellation), so re-wrapping fixes it.
+    return float(np.rad2deg(math.atan2(wy, wx)) % 360 % 360)
 
 
 def cell_label(lat, lon):
@@ -108,7 +111,7 @@ def solve_winds(df: pd.DataFrame) -> pd.DataFrame:
     # Per-segment wind speed / direction
     df["vw_spd_seg"] = np.sqrt(df["vw_n_seg"]**2 + df["vw_e_seg"]**2)
     df["vw_dir_seg"] = (
-        np.rad2deg(np.arctan2(df["vw_e_seg"], df["vw_n_seg"])) % 360
+        np.rad2deg(np.arctan2(df["vw_e_seg"], df["vw_n_seg"])) % 360 % 360
     )
 
     return df
@@ -141,7 +144,7 @@ def aggregate_cells(df: pd.DataFrame) -> pd.DataFrame:
         vw_e_std  = vw_e.std()
 
         spd  = math.sqrt(vw_n_mean**2 + vw_e_mean**2)
-        dirn = math.degrees(math.atan2(vw_e_mean, vw_n_mean)) % 360
+        dirn = math.degrees(math.atan2(vw_e_mean, vw_n_mean)) % 360 % 360
 
         rc = reciprocal_coverage(grp["trk_mean_deg"].tolist())
 
@@ -191,7 +194,7 @@ def build_shear_profile(df: pd.DataFrame) -> pd.DataFrame:
         vw_n = np.average(grp["vw_n_kt"], weights=grp["n_segs"])
         vw_e = np.average(grp["vw_e_kt"], weights=grp["n_segs"])
         spd  = math.sqrt(vw_n**2 + vw_e**2)
-        dirn = math.degrees(math.atan2(vw_e, vw_n)) % 360
+        dirn = math.degrees(math.atan2(vw_e, vw_n)) % 360 % 360
         records.append({
             "alt_bin":       alt_bin,
             "vw_n_kt":       round(vw_n, 2),
