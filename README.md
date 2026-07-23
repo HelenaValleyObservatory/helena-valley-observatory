@@ -15,6 +15,19 @@ estimates daily.
 - Terrain channeling index: 0.855 (strong valley signature)
 - Surface expression of January–February 2026 SSW event detected
 
+![Jet-level wind speed trend, 6 months](docs/images/jet_wind_speed_trend.png)
+
+![Terrain channeling index, 6 months](docs/images/terrain_channeling_trend.png)
+
+![ERA5 reanalysis validation, 140-day comparison](docs/images/era5_validation.png)
+
+*Charts above are from the full archive to date (6 months, 140-day validation run),
+not the original 100-day baseline the headline numbers above are drawn from —
+noted explicitly since they're different sample sizes. The validation chart
+shows both figures: the published 14.3° zonal-flow-only headline, and the
+stricter all-conditions average (27.2°) across every day in the archive,
+labeled separately rather than blended into one number.*
+
 Published on RTL-SDR.com: https://www.rtl-sdr.com/guest-post-listening-to-the-jet-stream-100-days-of-wind-sensing-with-stock-rtl-sdr-hardware/
 
 Larson, M. (2026). Jet Stream Intensity Proxy, ADS-B Passive Wind Sensing, Helena MT (Jan–May 2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20975559
